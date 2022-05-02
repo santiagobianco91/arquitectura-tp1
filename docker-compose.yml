@@ -1,9 +1,10 @@
 version: '2'
 
 services:
-
     node:
         build: ./app
+        ports:
+            - "8070:3000"
 
     nginx:
         image: nginx:1.21.6
@@ -14,6 +15,7 @@ services:
             - ./store/static/files:/static:ro
         links:
             - node
+            - bbox
 
     graphite:
         image: graphiteapp/graphite-statsd:1.1.8-8
@@ -46,6 +48,16 @@ services:
             - "/var/run:/var/run:rw"
             - "/sys:/sys:ro"
             - "/var/lib/docker/:/var/lib/docker:ro"
+
+    bbox:
+        image: arqsoft/bbox:202201.1
+        ports:
+            - "9090:9090"
+            - "9091:9091"
+        volumes:
+            - ./bbox_config.properties:/opt/bbox/config.properties:ro
+    
+        
 
 volumes:
     grafana_config:
