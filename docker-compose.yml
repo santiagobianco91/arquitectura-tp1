@@ -9,7 +9,7 @@ services:
     nginx:
         image: nginx:1.21.6
         ports:
-            - "3015:80"
+            - "5555:80"
         volumes:
             - ./nginx_reverse_proxy.conf:/etc/nginx/conf.d/default.conf:ro
             - ./store/static/files:/static:ro
