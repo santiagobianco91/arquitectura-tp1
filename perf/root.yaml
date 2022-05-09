@@ -1,7 +1,7 @@
 config:
   environments:
     node:
-      target: 'http://localhost:5555/node'
+      target: 'http://localhost:5555/api_servers'
       plugins:
         statsd:
           host: localhost
@@ -18,10 +18,18 @@ config:
     - name: Plain
       duration: 120
       arrivalRate: 30
-    
+    - name: End
+      duration: 30
+      arrivalRate: 1
 
 scenarios:
   - name: Root (/)
     flow:
       - get:
-          url: '/'
+          url: '/ping'
+      - get:
+          url: '/proxy_9090'
+      - get:
+          url: '/proxy_9091'
+      - get:
+          url: '/heavy'
