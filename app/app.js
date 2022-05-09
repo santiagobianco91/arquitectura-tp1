@@ -13,7 +13,7 @@ app.get("/ping", (req, res) => { // TODO
 });
 
 app.get("/proxy_9090", (req, res_major) => {
-    request('http://1c22-tp-1_bbox_2:9090', { json: true }, (err, res, body) => {
+    request('http://1c22-tp-1_bbox_1:9090', { json: true }, (err, res, body) => {
         if (err) { return console.log(err); }
         //console.log(body.url);
         //console.log(body.explanation);
@@ -22,7 +22,7 @@ app.get("/proxy_9090", (req, res_major) => {
 });
 
 app.get("/proxy_9091", (req, res_major) => {
-    request('http://1c22-tp-1_bbox_2:9091', { json: true }, (err, res, body) => {
+    request('http://1c22-tp-1_bbox_1:9091', { json: true }, (err, res, body) => {
         if (err) { return console.log(err); }
         //console.log(body.url);
         //console.log(body.explanation);
