@@ -8,6 +8,10 @@ const TIMEOUT = 5000;
 
 const id = Math.floor(Math.random() * 100);
 
+app.get("/", (req, res) => { // TODO
+    res.status(200).send("OK");
+});
+
 app.get("/ping", (req, res) => { // TODO
     res.status(200).send("ok - ping");
 });
