@@ -42,11 +42,23 @@ app.get("/timeout", (req, res) => {
 });
 
 app.get("/heavy", (req, res) => {
-    let start = new Date();
+    var limit = 10000000000;
+    var sum = 0;
+    var pi = 0;
 
-    while (new Date() - start < TIMEOUT);
+    let start_time = new Date();
+    console.log("Init time: "+start_time);
 
-    res.status(200).send(id + " - heavy");
+    for ( var i=1; i<=limit; i++ ) sum += 1 / ( i**2 );
+    
+    pi = Math.sqrt(sum * 6);
+        
+    let end_time = new Date();
+    console.log("End time: "+end_time);
+    console.log("Diff time: "+Math.abs(start_time-end_time)/1000+"s");
+
+    res.status(200).send(id +" - PI: "+pi+"\n");
+ 
 });
 
 app.listen(PORT, () => {
