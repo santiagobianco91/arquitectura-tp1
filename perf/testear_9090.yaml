@@ -1,0 +1,37 @@
+config:
+  environments:
+    node:
+      target: 'http://localhost:5555'
+      plugins:
+        statsd:
+          host: localhost
+          port: 8125
+          prefix: "artillery-node"
+
+  pool: 50 # All HTTP requests from all virtual users will be sent over the same connections
+
+  phases:
+    - name: Rampa 
+      duration: 10
+      arrivalRate: 2
+      rampTo: 5
+    - name: Plano - 15 request por segundo
+      duration: 30
+      arrivalRate: 5
+    - name: Ramp 
+      duration: 10
+      arrivalRate: 7
+      rampTo: 12
+    - name: Plano - 10 request por segundo
+      duration: 40
+      arrivalRate: 12
+    - name: Separador
+      duration: 15
+      arrivalRate: 1
+
+
+scenarios:
+  - name: Root (/)
+    flow:
+      - get:
+          url: '/proxy_9090'
