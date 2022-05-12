@@ -35,10 +35,24 @@ config:
     - name: Rampa 
       duration: 10
       arrivalRate: 100
-      rampTo: 100
-    - name: Plano - 1000 request por segundo
+      rampTo: 500
+    - name: Plano - 500 request por segundo
       duration: 30
-      arrivalRate: 1000
+      arrivalRate: 500
+    - name: Rampa 
+      duration: 10
+      arrivalRate: 500
+      rampTo: 600
+    - name: Plano - 650 request por segundo
+      duration: 50
+      arrivalRate: 650
+    - name: Rampa 
+      duration: 10
+      arrivalRate: 650
+      rampTo: 800
+    - name: Plano - 800 request por segundo
+      duration: 50
+      arrivalRate: 800
     - name: Separador
       duration: 10
       arrivalRate: 1

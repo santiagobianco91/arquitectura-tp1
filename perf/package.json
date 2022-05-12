@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "artillery": "artillery",
-    "node": "artillery run testear_9091_sin_nginx.yaml -e node",
+    "node": "artillery run testear_9091.yaml -e node",
     "scenario": "./run-scenario.sh"
   },
   "author": "",

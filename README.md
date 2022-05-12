@@ -265,4 +265,8 @@ docc exec SERVICE COMMAND
 
 # Versión instalada
 docc version
+
+# ver log de un container en particular
+docker logs idContainer -f -t
 ```
+
