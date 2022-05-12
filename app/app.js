@@ -1,6 +1,6 @@
 const express = require("express");
 const request = require("request");
-var request1 = require('sync-request');
+//const request1 = require('sync-request');
 
 const app = express();
 
@@ -11,19 +11,28 @@ const id = Math.floor(Math.random() * 100);
 
 app.get("/", (req, res) => {
   // TODO
-  res.status(200).send("OK");
+  res.status(200).send("OK\n");
 });
 
 app.get("/ping", (req, res) => {
   // TODO
-  res.status(200).send("ok - ping");
+  res.status(200).send("ok - ping\n");
 });
 
-app.get("/proxy_9090", (req, res_major) => {
-  //var res = request1('GET', 'http://1c22-tp-1_bbox_1:9090');
-  var res = request1('GET', 'http://localhost:3010/timeout');
-  console.log(res.statusCode);
-  return res_major.status(res.statusCode).send(res.body);
+function req(type, url) {
+  return request(type, url);
+}
+app.get("/proxy_9090", async (req, res_major) => {
+  await new Promise( () => {
+    var res = request('GET', 'http://1c22-tp-1_bbox_1:9090');
+    //var res = request('GET', 'http://localhost:3010/timeout');
+    console.log(res.statusCode);
+    return res_major.status(res.statusCode).send(res.body);
+  });
+  //
+  //var res = request1('GET', 'http://localhost:3010/ping');
+    
+  
   // request("http://1c22-tp-1_bbox_1:9090", { json: true }, (err, res, body) => {
   //   if (err) {
   //     console.log("ERROR BBOX: " + err);
@@ -47,8 +56,19 @@ app.get("/proxy_9091", (req, res_major) => {
   });
 });
 
+const timeoutObj = setTimeout(() => {
+  console.log('timeout 10s');
+}, 10000);
+
 app.get("/timeout", async (req, res)  => {
   await new Promise(r => setTimeout(r, 5000));
+  console.log("timeout termino! ");
+  res.status(200).send("timeout 5 segundos");
+});
+
+app.get("/timeout-async", async (req, res)  => {
+  this.timeoutObj;
+  console.log("timeout-async termino!");
   res.status(200).send("timeout 5 segundos");
 });
 
