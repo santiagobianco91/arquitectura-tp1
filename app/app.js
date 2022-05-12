@@ -1,6 +1,6 @@
 const express = require("express");
 const request = require("request");
-//const request1 = require('sync-request');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -19,46 +19,63 @@ app.get("/ping", (req, res) => {
   res.status(200).send("ok - ping\n");
 });
 
-function req(type, url) {
-  return request(type, url);
+async function req_async(type, url) {
+   var res =  request(type, url);
+   return res;
 }
-app.get("/proxy_9090", async (req, res_major) => {
-  await new Promise( () => {
-    var res = request('GET', 'http://1c22-tp-1_bbox_1:9090');
-    //var res = request('GET', 'http://localhost:3010/timeout');
-    console.log(res.statusCode);
-    return res_major.status(res.statusCode).send(res.body);
-  });
-  //
-  //var res = request1('GET', 'http://localhost:3010/ping');
-    
-  
-  // request("http://1c22-tp-1_bbox_1:9090", { json: true }, (err, res, body) => {
-  //   if (err) {
-  //     console.log("ERROR BBOX: " + err);
-  //     return res_major
-  //       .status(res ? res.statusCode : 500)
-  //       .send("ERROR BBOX: " + err);
-  //   }
-  //   res_major.status(res.statusCode).send(body);
-  // });
+
+app.get("/proxy_9090", (req, res_major) => {
+  var res = proxy("9090");
+  console.log("res proxy_9090: "+res);
+  return res_major.status(200).send("OK proxy 9090\n");
 });
+
+async function proxy(port) {
+  try {
+    console.log("calling http://1c22-tp-1_bbox_1:"+port+" ...");
+
+    const response = await fetch('http://1c22-tp-1_bbox_1:'+port)
+    const statusCode = await response.statusCode;
+    const msg = await response.body;
+
+
+    console.log("call url:"+json.url+"\n");
+    console.log("call status code: "+statusCode+"\n");
+    console.log("call msg: "+msg+"\n");
+  } catch (error) {
+    console.log("Error response: "+error.response);
+  }
+};
+
 
 app.get("/proxy_9091", (req, res_major) => {
-  request("http://1c22-tp-1_bbox_1:9091", { json: true }, (err, res, body) => {
-    if (err) {
-      console.log("ERROR BBOX: " + err);
-      return res_major
-        .status(res ? res.statusCode : 500)
-        .send("ERROR BBOX: " + err);
-    }
-    res_major.status(res.statusCode).send(body);
-  });
+  var res = proxy("9091");
+  console.log("res proxy_9090: "+res);
+  return res_major.status(200).send("OK proxy 9091\n");
 });
 
+/*
+app.get("/proxy_9091", async (req, res_major) => {
+  await new Promise( () => {
+    //request("GET","http://1c22-tp-1_bbox_1:9091", { json: true }, (err, res, body) => {
+      request("GET","http://google.com.ar", { json: true }, (err, res, body) => {
+      if (err) {
+        console.log("ERROR BBOX: " + err);
+        return res_major
+          .status(res ? res.statusCode : 500)
+          .send("ERROR BBOX: " + err);
+      }
+      res_major.status(res.statusCode).send(body);
+    });
+  });
+});
+*/
+
+/*
 const timeoutObj = setTimeout(() => {
   console.log('timeout 10s');
 }, 10000);
+*/
 
 app.get("/timeout", async (req, res)  => {
   await new Promise(r => setTimeout(r, 5000));
