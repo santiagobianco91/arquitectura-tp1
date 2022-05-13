@@ -13,20 +13,34 @@ config:
   phases:
     - name: Rampa 
       duration: 10
-      arrivalRate: 2
-      rampTo: 5
-    - name: Plano - 15 request por segundo
+      arrivalRate: 10
+      rampTo: 20
+    - name: Plano - 20 request por segundo
       duration: 30
-      arrivalRate: 5
-    - name: Ramp 
+      arrivalRate: 20
+    - name: Rampa 
       duration: 10
-      arrivalRate: 7
-      rampTo: 12
-    - name: Plano - 10 request por segundo
-      duration: 40
-      arrivalRate: 12
+      arrivalRate: 20
+      rampTo: 50
+    - name: Plano - 50 request por segundo
+      duration: 30
+      arrivalRate: 50
+    - name: Rampa 
+      duration: 10
+      arrivalRate: 50
+      rampTo: 100
+    - name: Plano - 100 request por segundo
+      duration: 30
+      arrivalRate: 100
+    - name: Rampa 
+      duration: 10
+      arrivalRate: 100
+      rampTo: 150
+    - name: Plano - 150 request por segundo
+      duration: 30
+      arrivalRate: 150
     - name: Separador
-      duration: 15
+      duration: 10
       arrivalRate: 1
 
 
