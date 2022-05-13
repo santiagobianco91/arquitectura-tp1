@@ -41,7 +41,7 @@ app.get("/proxy_9090", async (req, res_major) => {
   }
 });
 
-app.get("/proxy_9091", (req, res_major) => {
+app.get("/proxy_9091", async (req, res_major) => {
   try {
     var res = await proxy("9091");
     return res_major.status(res.status).send("OK proxy 9091\n");
