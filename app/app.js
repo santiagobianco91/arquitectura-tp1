@@ -34,48 +34,21 @@ async function proxy(port) {
   try {
     console.log("calling http://1c22-tp-1_bbox_1:"+port+" ...");
 
-    const response = await fetch('http://1c22-tp-1_bbox_1:'+port)
+    const response = await fetch('http://1c22-tp-1_bbox_1:'+port);
+    //const response = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY');
     const statusCode = await response.statusCode;
-    const msg = await response.body;
 
-
-    console.log("call url:"+json.url+"\n");
-    console.log("call status code: "+statusCode+"\n");
-    console.log("call msg: "+msg+"\n");
+    console.log("response status code: "+statusCode+"\n");
   } catch (error) {
     console.log("Error response: "+error.response);
   }
 };
-
 
 app.get("/proxy_9091", (req, res_major) => {
   var res = proxy("9091");
   console.log("res proxy_9090: "+res);
   return res_major.status(200).send("OK proxy 9091\n");
 });
-
-/*
-app.get("/proxy_9091", async (req, res_major) => {
-  await new Promise( () => {
-    //request("GET","http://1c22-tp-1_bbox_1:9091", { json: true }, (err, res, body) => {
-      request("GET","http://google.com.ar", { json: true }, (err, res, body) => {
-      if (err) {
-        console.log("ERROR BBOX: " + err);
-        return res_major
-          .status(res ? res.statusCode : 500)
-          .send("ERROR BBOX: " + err);
-      }
-      res_major.status(res.statusCode).send(body);
-    });
-  });
-});
-*/
-
-/*
-const timeoutObj = setTimeout(() => {
-  console.log('timeout 10s');
-}, 10000);
-*/
 
 app.get("/timeout", async (req, res)  => {
   await new Promise(r => setTimeout(r, 5000));
