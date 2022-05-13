@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request");
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const app = express();
 
 const PORT = 3010;
@@ -19,40 +20,44 @@ app.get("/ping", (req, res) => {
 });
 
 async function req_async(type, url) {
-   var res =  request(type, url);
-   return res;
+  var res = request(type, url);
+  return res;
 }
 
-app.get("/proxy_9090",  (req, res_major) => {
-  var res = proxy("9090");
-  console.log("res proxy_9090: "+res);
-  return res_major.status(200).send("OK proxy 9090\n");
-});
-
 async function proxy(port) {
-  try {
-    console.log("calling http://1c22-tp-1_bbox_1:"+port+" ...");
-
+    console.log("calling http://1c22-tp-1_bbox_1:" + port + " ...");
     const response = await fetch('http://1c22-tp-1_bbox_1:'+port);
-    console.log("response status code: "+response.status+"\n");
-  } catch (error) {
-    console.log("Error response: "+error);
-  }
-};
+    console.log("response status code: " + response.status + "\n");
+    return response;
+}
 
-app.get("/proxy_9091",  (req, res_major) => {
-  var res = proxy("9091");
-  console.log("res proxy_9090: "+res);
-  return res_major.status(200).send("OK proxy 9091\n");
+app.get("/proxy_9090", async (req, res_major) => {
+  try {
+    var res = await proxy("9090");
+    return res_major.status(res.status).send("OK proxy 9090\n");
+  } catch (error) {
+    console.log("Error response: " + error);
+    return res_major.status(500).send("Error proxy 9090\n");
+  }
 });
 
-app.get("/timeout", async (req, res)  => {
-  await new Promise(r => setTimeout(r, 5000));
+app.get("/proxy_9091", (req, res_major) => {
+  try {
+    var res = await proxy("9091");
+    return res_major.status(res.status).send("OK proxy 9091\n");
+  } catch (error) {
+    console.log("Error response: " + error);
+    return res_major.status(500).send("Error proxy 9091\n");
+  }
+});
+
+app.get("/timeout", async (req, res) => {
+  await new Promise((r) => setTimeout(r, 5000));
   console.log("timeout termino! ");
   res.status(200).send("timeout 5 segundos");
 });
 
-app.get("/timeout-async", async (req, res)  => {
+app.get("/timeout-async", async (req, res) => {
   this.timeoutObj;
   console.log("timeout-async termino!");
   res.status(200).send("timeout 5 segundos");

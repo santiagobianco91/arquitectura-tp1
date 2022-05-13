@@ -34,11 +34,11 @@ config:
       arrivalRate: 100
     - name: Rampa 
       duration: 10
-      arrivalRate: 100
-      rampTo: 150
-    - name: Plano - 150 request por segundo
+      arrivalRate: 250
+      rampTo: 200
+    - name: Plano - 250 request por segundo
       duration: 30
-      arrivalRate: 150
+      arrivalRate: 250
     - name: Separador
       duration: 10
       arrivalRate: 1
