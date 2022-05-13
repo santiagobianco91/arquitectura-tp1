@@ -33,6 +33,7 @@ async function proxy(port) {
 
 app.get("/proxy_9090", async (req, res_major) => {
   try {
+    console.log("comenzo 9090! ");
     var res = await proxy("9090");
     return res_major.status(res.status).send("OK proxy 9090\n");
   } catch (error) {
@@ -52,6 +53,7 @@ app.get("/proxy_9091", async (req, res_major) => {
 });
 
 app.get("/timeout", async (req, res) => {
+  console.log("comenzo timeout! ");
   await new Promise((r) => setTimeout(r, 5000));
   console.log("timeout termino! ");
   res.status(200).send("timeout 5 segundos");

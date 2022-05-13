@@ -1,4 +1,6 @@
 config:
+  http:
+    timeout: 100
   environments:
     node:
       target: 'http://localhost:5555'
@@ -13,32 +15,22 @@ config:
   phases:
     - name: Rampa 
       duration: 10
+      arrivalRate: 5
+      rampTo: 10
+    - name: Plano - 10 request por segundo
+      duration: 30
       arrivalRate: 10
-      rampTo: 20
-    - name: Plano - 20 request por segundo
-      duration: 30
-      arrivalRate: 20
     - name: Rampa 
       duration: 10
-      arrivalRate: 20
-      rampTo: 50
-    - name: Plano - 50 request por segundo
+      arrivalRate: 10
+      rampTo: 13
+    - name: Plano - 13 request por segundo
       duration: 30
-      arrivalRate: 50
+      arrivalRate: 13
     - name: Rampa 
       duration: 10
-      arrivalRate: 50
-      rampTo: 100
-    - name: Plano - 100 request por segundo
-      duration: 30
-      arrivalRate: 100
-    - name: Rampa 
-      duration: 10
-      arrivalRate: 250
-      rampTo: 200
-    - name: Plano - 250 request por segundo
-      duration: 30
-      arrivalRate: 250
+      arrivalRate: 13
+      rampTo: 16
     - name: Separador
       duration: 10
       arrivalRate: 1
