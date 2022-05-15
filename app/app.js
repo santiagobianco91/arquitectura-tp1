@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 app.get("/ping", (req, res) => {
   // TODO
-  res.status(200).send("ok - ping\n");
+  res.status(200).send("APP OK\n");
 });
 
 async function req_async(type, url) {
