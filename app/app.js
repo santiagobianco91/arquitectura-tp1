@@ -65,7 +65,7 @@ app.get("/timeout-async", async (req, res) => {
 });
 
 app.get("/heavy", async (req, res) => {
-  var limit = 10000000000;
+  var limit = 100000000;
   var sum = 0;
   var pi = 0;
 
