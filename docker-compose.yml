@@ -3,8 +3,8 @@ version: '2'
 services:
     node:
         build: ./app
-        ports:
-            - "3010:3010"
+#        ports:
+#            - "3010:3010"
 
     nginx:
         image: nginx:1.21.6
