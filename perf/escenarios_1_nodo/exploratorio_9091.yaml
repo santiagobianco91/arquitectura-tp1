@@ -1,0 +1,55 @@
+#
+# Es el mismo escenario que el 9090, a priori no deberia asumir que éste es asincronico
+#
+# 
+config:
+  http:
+    timeout: 100
+  environments:
+    node:
+      target: 'http://localhost:5555'
+      plugins:
+        statsd:
+          host: localhost
+          port: 8125
+          prefix: "artillery-node"
+
+  pool: 50 # All HTTP requests from all virtual users will be sent over the same connections
+
+  phases:
+    - name: Rampa I - Light
+      duration: 30
+      arrivalRate: 3
+      rampTo: 5
+    - name: Plain I
+      duration: 30
+      arrivalRate: 5
+    - name: Rampa II - Pico
+      duration: 30
+      arrivalRate: 5
+      rampTo: 10
+    - name: Plain II
+      duration: 30
+      arrivalRate: 10
+    - name: Plain III
+      duration: 30
+      arrivalRate: 3      
+    - name: Rampa III - Pico
+      duration: 30
+      arrivalRate: 5
+      rampTo: 10
+    - name: Plain IV
+      duration: 30
+      arrivalRate: 10   
+    - name: Plain V
+      duration: 30
+      arrivalRate: 3         
+    - name: Separador
+      duration: 30
+      arrivalRate: 1     
+
+scenarios:
+  - name: Root (/)
+    flow:
+      - get:
+          url: '/proxy_9091'

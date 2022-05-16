@@ -1,0 +1,49 @@
+config:
+  environments:
+    node:
+      target: 'http://localhost:5555'
+      plugins:
+        statsd:
+          host: localhost
+          port: 8125
+          prefix: "artillery-node"
+
+  pool: 50 # All HTTP requests from all virtual users will be sent over the same connections
+
+  phases:
+    - name: Rampa I - Light
+      duration: 30
+      arrivalRate: 25
+      rampTo: 50
+    - name: Plain I
+      duration: 30
+      arrivalRate: 50
+    - name: Rampa II - Pico
+      duration: 30
+      arrivalRate: 50
+      rampTo: 100
+    - name: Plain II
+      duration: 30
+      arrivalRate: 100
+    - name: Plain III
+      duration: 30
+      arrivalRate: 50  
+    - name: Rampa III - Pico
+      duration: 30
+      arrivalRate: 50
+      rampTo: 100
+    - name: Plain III
+      duration: 30
+      arrivalRate: 100
+    - name: Plain III
+      duration: 30
+      arrivalRate: 50        
+    - name: Separador
+      duration: 30
+      arrivalRate: 1     
+
+scenarios:
+  - name: Root (/)
+    flow:
+      - get:
+          url: '/ping'
