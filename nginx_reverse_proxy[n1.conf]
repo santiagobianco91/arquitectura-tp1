@@ -1,0 +1,20 @@
+    # List of application servers
+    # el numero de puerto es el interno dentro del docker
+    upstream api_servers {
+        server 1c22-tp-1_node_1:3010;
+    }
+
+    # Configuration for the server
+    server {
+
+        # Running port
+        listen [::]:80;
+        listen 80;
+        keepalive_timeout  110;
+        proxy_read_timeout 110;
+
+        # Proxying the connections
+        location / {
+            proxy_pass         http://api_servers;
+        }
+    }
