@@ -18,11 +18,6 @@ app.get("/ping", (req, res) => {
   res.status(200).send("APP OK\n");
 });
 
-async function req_async(type, url) {
-  var res = request(type, url);
-  return res;
-}
-
 async function proxy(port) {
     console.log("calling http://1c22-tp-1_bbox_1:" + port + " ...");
     const response = await fetch('http://1c22-tp-1_bbox_1:'+port);
